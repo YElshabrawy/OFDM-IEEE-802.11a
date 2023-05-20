@@ -57,6 +57,22 @@ while n < length(Frames)
     % Channel Estimation
     gains = channelEstimation(preamble, rep_type);
 
+    % Channel Equalization
+    switch(M)
+        case 'BPSK'
+            mm = 2;
+        case 'QPSK'
+            mm = 4;
+        case '16QAM'
+            mm = 16;
+        case '64QAM'
+            mm = 64;
+        otherwise
+            mm = 0;
+    end
+    equalized_frames = channelEqalization(rec_frames,gains,equalization_method, rep_type, mm, 10.^(snr/10));
+
+
     n = n+402+end_frame;
 end
 end
