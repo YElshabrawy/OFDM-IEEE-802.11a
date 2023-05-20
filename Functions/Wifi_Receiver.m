@@ -71,7 +71,26 @@ while n < length(Frames)
             mm = 0;
     end
     equalized_frames = channelEqalization(rec_frames,gains,equalization_method, rep_type, mm, 10.^(snr/10));
+    equalized_frames = reshape(equalized_frames, 1, length(equalized_frames));
 
+    % Demap
+    if strcmp(rep_type,'Fixed')
+        out_data = symbolDemapper(equalized_frames.data, M);    
+    else
+        out_data = symbolDemapper(equalized_frames, M);
+    end
+
+    % Remove padding
+    out_data=out_data(1:end-P);
+    out_data =reshape(out_data, 1, length(out_data));
+
+    % Channel Decode
+    outputStream_data = conv_decode(out_data,C,bits);
+    decoded_data = [decoded_data outputStream_data];
+
+    % Before and After Equalization
+    rec_frames1 = [rec_frames1 rec_frames];
+    eq_rec_fremaes1 = [eq_rec_fremaes1  equalized_frames];
 
     n = n+402+end_frame;
 end
