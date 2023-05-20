@@ -33,31 +33,16 @@ while n < length(Frames)
     signal_decode = conv_decode(signal_demap,1/2,SIZE_SIGNAL_PURE);
     [~, L , M ,C ,P, m]= decode_signal(signal_decode);
 
-    % 3. Handle Data
-    % Calculate the frame size
+    % 
     bits = 8*L;
     coded_bits = ceil(bits / C);
     all_no_bits = coded_bits+P;
     no_ofdm_sympols = all_no_bits/(48*m);
     end_frame = no_ofdm_sympols*80;
 
-    % Get the frame
     rec_data =Frames(n+402:n+401+end_frame);
     rec_data = reshape(rec_data, 1, length(rec_data));
-
-    % From OFDM format to original bits
-    rec_frames= deapply_OFDM(rec_data);
     
-    % Floating to Fixed 
-    if strcmp(rep_type,'Fixed')
-        rec_frames= fi(rec_frames,1,16,12);
-        preamble= fi(preamble,1,16,12);
-    end
-
-    % Channel Estimation
-    gains = channelEstimation(preamble, rep_type);
-
-    n = n+402+end_frame;
 end
 end
 
