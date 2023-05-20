@@ -6,9 +6,13 @@ long = [1, 1,-1, -1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1,
 % Create short train
 vec=pad64fft(short);
 Vs_ifft= ifft(vec);
+% Apply w(t)
+% Vs_ifft(1) = 0.5 * Vs_ifft(1);
+% Vs_ifft(61) = 0.5 * Vs_ifft(61);
 
 short_train=[Vs_ifft;Vs_ifft;Vs_ifft(1:33)];
 short_train=round(short_train,3);
+
 % Divide 1st and last by 2 (weight)
 short_train(1) = short_train(1)/2;
 short_train(end) = short_train(end)/2;
@@ -25,7 +29,7 @@ long_train= round(long_train,3);
 
 % Divide 1st and last by 2 (weight)
 long_train(1) = long_train(1)/2;
-long_train(end) = long_train(end)/2;
+long_train(end) = -long_train(end)/2;
 
 preamble=[short_train; long_train];
 

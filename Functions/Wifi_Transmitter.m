@@ -1,4 +1,4 @@
-function all_frames = Transmitter(x, L, R, codeRate, mod_type, rep_type)
+function all_frames = Wifi_Transmitter(x, L, R, codeRate, mod_type, rep_type)
 CycPref = 16;
 % create preamble
 preamble =create_preamble();
@@ -25,6 +25,7 @@ for i=0:8*L:length(x)
         signal = create_sig(R,L);
     end
 
+    % Modulate Signal using 1/2 conv BPSK for reliable Tx
     out_signal = conv_encode(signal,1/2);
     compledatasignal = symbolMapper(out_signal ,'BPSK');
     signal_ifft_without_cp= ifft(compledatasignal);

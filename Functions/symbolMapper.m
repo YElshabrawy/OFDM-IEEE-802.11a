@@ -1,5 +1,5 @@
 function output = symbolMapper(inputbits,modtype)
-
+% LTE Toolbox Required
 switch modtype
     case 'BPSK'
         output = lteSymbolModulate(inputbits,'BPSK');
