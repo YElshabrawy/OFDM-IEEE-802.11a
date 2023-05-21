@@ -29,6 +29,12 @@ vec(58)=1; % pilot -7
 vec(8)=1;  %pilot 7
 vec(22)=-1;  %pilot 21
 
-output= ifft(vec);
+G_TRANSFORM = getTransform();
+if(G_TRANSFORM == "DCT")
+    output= idct(vec);
+
+else
+    output= ifft(vec);
+end
 output =reshape(output, 1, length(output));
 end

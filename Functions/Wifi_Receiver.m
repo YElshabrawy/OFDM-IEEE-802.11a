@@ -8,6 +8,13 @@ decoded_data = [];
 rec_frames1 = [];
 eq_rec_fremaes1 = [];
 SIZE_PREAMBLE = 322;
+G_PREAMBLE_TYPE = getPreamble();
+    if G_PREAMBLE_TYPE == "half"
+        SIZE_PREAMBLE = SIZE_PREAMBLE/2 + 1;
+    elseif G_PREAMBLE_TYPE == "double"
+        SIZE_PREAMBLE = (SIZE_PREAMBLE-1) * 2;
+    end
+
 SIZE_SIGNAL = 80;
 SIZE_SIGNAL_PURE = 32;
 CycPref = 16;
@@ -42,7 +49,7 @@ while n < length(Frames)
     end_frame = no_ofdm_sympols*80;
 
     % Get the frame
-    rec_data =Frames(n+402:n+401+end_frame);
+    rec_data =Frames(n+SIZE_SIGNAL+SIZE_PREAMBLE : n+SIZE_SIGNAL+SIZE_PREAMBLE-1+end_frame);
     rec_data = reshape(rec_data, 1, length(rec_data));
 
     % From OFDM format to original bits
@@ -92,7 +99,7 @@ while n < length(Frames)
     rec_frames1 = [rec_frames1 rec_frames];
     eq_rec_fremaes1 = [eq_rec_fremaes1  equalized_frames];
 
-    n = n+402+end_frame;
+    n = n+SIZE_PREAMBLE+SIZE_SIGNAL+end_frame;
 end
 end
 

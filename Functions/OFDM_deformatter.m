@@ -1,5 +1,10 @@
 function output=OFDM_deformatter(input)
-S= fft(input);
+G_TRANSFORM = getTransform();
+if(G_TRANSFORM == "DCT")
+    S= dct(input);
+else
+    S= fft(input);
+end
 index = [39,40,41,42,43,45,46,47,48,49,50,51,52,53,54,55,56,57,59,60,61,62,63,64,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27];
 
 for k=1:48
@@ -24,7 +29,7 @@ for m=1:64
     elseif m>44 && m<58
         km= m-40;
         new_k(km+1)=S(m);
-    elseif m>58 
+    elseif m>58
         km= m-41;
         new_k(km+1)=S(m);
     end
@@ -32,4 +37,3 @@ end
 
 %output= new_k;
 end
- 
