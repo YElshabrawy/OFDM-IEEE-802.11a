@@ -46,8 +46,8 @@ while n < length(Frames)
     G_CODING = getCoding();
     if(G_CODING == "REP")
         coded_bits = ceil(bits * 3);
-        all_no_bits = coded_bits;
-    elseif (G_CODING == "LDPC")
+        all_no_bits = coded_bits+P;
+    elseif(G_CODING = "LDPC")
         coded_bits = ceil(bits / 0.75);
         all_no_bits = coded_bits+P;
     else
