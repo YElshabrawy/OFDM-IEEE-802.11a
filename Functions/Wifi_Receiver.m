@@ -38,7 +38,10 @@ while n < length(Frames)
     signal_demap = reshape(signal_demap, 1, length(signal_demap));
     % Channel Decode
     signal_decode = conv_decode(signal_demap,1/2,SIZE_SIGNAL_PURE, true);
-    [~, L , M ,C ,P, m]= decode_signal(signal_decode);
+    if(length(signal_decode) ~= 32)
+        disp('err')
+    end
+    [R, L , M ,C ,P, m]= decode_signal(signal_decode);
 
     % 3. Handle Data
     % Calculate the frame size
@@ -46,15 +49,12 @@ while n < length(Frames)
     G_CODING = getCoding();
     if(G_CODING == "REP")
         coded_bits = ceil(bits * 3);
-        all_no_bits = coded_bits;
     elseif (G_CODING == "LDPC")
         coded_bits = ceil(bits / 0.75);
-        all_no_bits = coded_bits+P;
     else
         coded_bits = ceil(bits / C);
-        all_no_bits = coded_bits+P;
     end
-
+    all_no_bits = coded_bits+P;
     no_ofdm_sympols = all_no_bits/(48*m);
     end_frame = no_ofdm_sympols*80;
 

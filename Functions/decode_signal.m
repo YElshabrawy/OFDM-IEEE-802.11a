@@ -45,6 +45,13 @@ elseif Rate == [0 0 1 1]
         M = '64QAM';
         m=6;
         C = 3/4;
+else
+    % Error happened
+    error("Low SNR: Signal field is invalid");
+    R = -1;
+    M = "";
+    m=-1;
+    C=-1;
 end
    L = bi2de(length,'left-msb');
    P = bi2de(pad,'left-msb');

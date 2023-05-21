@@ -39,7 +39,7 @@ else
 
             puncpat = [1;1;1;0;0;1];
             outputStream = convenc(input,trellis,puncpat);
-            c = length(input ) + ceil(length(input)/3); % for example: if inputStream = 8000 , and coderate 3/4 : ceil(8000/4)= 2667 , 8000+2667 = 10667... =
+            c = length(input) + ceil(length(input)/3); % for example: if inputStream = 8000 , and coderate 3/4 : ceil(8000/4)= 2667 , 8000+2667 = 10667... =
             outputStream = outputStream (1:c);
     end
 end

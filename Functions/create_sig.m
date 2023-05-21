@@ -43,10 +43,15 @@ tail = [0 0 0 0 0 0]; % Tail bits are always set to zero
 
 % get the number of coded bits 
 bits = 8*L;
-coded_bits = ceil(bits / C);
+G_CODING = getCoding();
+    if(G_CODING == "REP")
+        coded_bits = ceil(bits * 3);
+    elseif (G_CODING == "LDPC")
+        coded_bits = ceil(bits / 0.75);
+    else
+        coded_bits = ceil(bits / C);
+    end
 rem_bits = rem(coded_bits,(48*M));
-
-
 no_bits =rem((48*M)- rem_bits,(48*M));
 pad = flip(de2bi(no_bits,9)); % 9 bits for padding
 signal=[Rate length parity tail pad];
