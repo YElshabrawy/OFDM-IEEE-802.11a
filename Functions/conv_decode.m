@@ -41,7 +41,11 @@ else
             outputStream = vitdec(inputStream,trellis,1,'trunc','hard',puncpat);
 
     end
-    outputStream = outputStream(1:L); % to cancel the zero-padding effect that happend in the encoder
+    if(L <= length(outputStream))
+        outputStream = outputStream(1:L); % to cancel the zero-padding effect that happend in the encoder
+    else
+        disp("Check L ??")
+    end
 
 
 end
