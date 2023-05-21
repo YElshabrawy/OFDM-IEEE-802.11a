@@ -36,5 +36,6 @@ if(G_TRANSFORM == "DCT")
 else
     output= ifft(vec);
 end
+
 output =reshape(output, 1, length(output));
 end

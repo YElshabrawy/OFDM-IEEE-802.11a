@@ -29,7 +29,7 @@ for m=1:64
     elseif m>44 && m<58
         km= m-40;
         new_k(km+1)=S(m);
-    elseif m>58
+    elseif m>58 
         km= m-41;
         new_k(km+1)=S(m);
     end
@@ -37,3 +37,4 @@ end
 
 %output= new_k;
 end
+ 
